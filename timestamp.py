@@ -16,16 +16,12 @@ else:
 
 def timestamp():
     nfileedit.write(time.strftime("%d/%m/%y %H:%M:%S") + '\n')
-
 def customtimestamp(inputtime):
     nfileedit.write(time.strftime(inputtime) + '\n')
-
 def getline (linenum):
     return datetime.datetime.strptime(lines[linenum].replace('\n', ''), "%d/%m/%y %H:%M:%S")
-
 def timesbetween(init, follow):
     return getline(follow) - getline(init)
-
 def alltimesbetween():
     plist = []
     you = 1 # init at your press
@@ -42,7 +38,6 @@ def alltimesbetween():
         plist.append(plist1)
         plist1 = []
     return plist
-
 def split(plist):
     plist1 = []
     count = 0
