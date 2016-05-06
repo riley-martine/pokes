@@ -1,12 +1,30 @@
 import datetime
+import os.path
+
+
 
 time = datetime.datetime.now()
 name = raw_input("name:")
+
+if not os.path.isfile(name):
+    if raw_input("is the name \"" + name + "\" correct? (y/n): ") == "y":
+        print "creating file..."
+        file = open(name, 'w+')
+        file.close()
+        print "done creating file"
+    else:
+        exit()
+
 nfile = open(name, "r+")
 nfileedit = open(name, "a+")
 lines = nfile.readlines()
 
+
+they = 0
+
 if lines != []:
+    if lines [0][0] == "t":
+        they = 1
     del lines[0]
 else:
     if raw_input("who poked last? t/y: ") == "t":
@@ -41,6 +59,8 @@ def alltimesbetween():
 def split(plist):
     plist1 = []
     count = 0
+    if they == 1:
+        count = 1
     for i in plist:
         if count == 0:
             print i
@@ -62,6 +82,8 @@ def main():
             print i
     elif mode == "split":
         split(alltimesbetween())
+    elif mode =="q":
+        exit()
     else:
         main()
 
