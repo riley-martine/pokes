@@ -23,3 +23,13 @@ This fun script can keep track of the times in between pokes.
 	d) split: read all times between pokes, split by poker
 
 4) do the right mode. get the right times. ezpz
+
+
+
+
+Want to test it? here are exact instructions.
+
+$ python timestamp.py
+$ name: testname
+$ mode: read
+

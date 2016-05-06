@@ -19,11 +19,11 @@ nfileedit = open(name, "a+")   #open nfile for editing in append mode
 lines = nfile.readlines()      #make a nice list of all the lines in order
 
 
-they = 0       #we need this in a sec
+theyglobal = 0       #we need this in a sec
 
 if lines != []:      #if lines isn't blank
     if lines [0][0] == "t":  #and if it starts with "they start"
-        they = 1      #let the code down below know they started
+        theyglobal = 1      #let the code down below know they started
     del lines[0]      #from our temporary list remove that line
 else:    #if lines is not blank
     if raw_input("who poked last? t/y: ") == "t":    #ask who poked last, if it was them
@@ -46,6 +46,7 @@ def timesbetween(init, follow):
 def alltimesbetween():    #get all times in between pokes, with person who did thing appended
     plist = []      #initialize paired list (I know these aren't really plists)
     count = 0
+    they = theyglobal
     for i in range (1, len(lines)):
         plist1 = []
         if they == 0: #if they did not start, then you did
