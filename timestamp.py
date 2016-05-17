@@ -73,7 +73,6 @@ def alltimesbetween():  # get all times in between pokes, with person who did th
         plist1 = []  # set temp plist blank
     return plist  # return list of lists
 
-
 def split(plist):  # print every other index in list, then print the rest
     plist1 = []  # init blank list
     count = 0  # bool count for passes
@@ -88,8 +87,37 @@ def split(plist):  # print every other index in list, then print the rest
         print i  # print it
 
 
+def averageall():
+    n = datetime.timedelta()
+    for i in range(1, len(lines)):
+        n += timesbetween(i - 1, i)
+    print n / len(lines)
+
+def average():
+    youdate = datetime.timedelta()
+    younum = 0
+    theydate = datetime.timedelta()
+    theynum = 0
+    they = theyglobal
+    for i in range(1, len(lines)):
+        if they == 0:
+            theydate += timesbetween(i - 1, i)
+            theynum += 1
+            they = 1  # switch it up bb
+        elif they == 1:  # the opposite of that
+            youdate += timesbetween(i - 1, i)
+            younum += 1
+            they = 0
+    print "\ntheir average"
+    print theydate / theynum
+    print "\nyour average"
+    print youdate / younum
+
+
+
+
 def main():
-    mode = raw_input("Mode? (stamp, cstamp, read, or split: ")  # ask for mode
+    mode = raw_input("Mode? (stamp, cstamp, read, split, averageall, average, or quit): ")  # ask for mode
     if mode == "stamp":  # if asked to timestamp now
         timestamp()  # do that
     elif mode == "cstamp":  # if you missed the last time to timestamp
@@ -101,8 +129,12 @@ def main():
             print i  # print them
     elif mode == "split":  # if you want times waited organized by person
         split(alltimesbetween())  # split all times between
-    elif mode == "q":  # if you type q
+    elif mode == "quit":  # if you type q
         exit()  # exit
+    elif mode == "averageall":
+        averageall()
+    elif mode == "average":
+        average()
     else:  # if you made a typo
         print "That's not a mode"  # let you know
         main()  # retry mode selector (main)
