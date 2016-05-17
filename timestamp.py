@@ -73,6 +73,7 @@ def alltimesbetween():  # get all times in between pokes, with person who did th
         plist1 = []  # set temp plist blank
     return plist  # return list of lists
 
+
 def split(plist):  # print every other index in list, then print the rest
     plist1 = []  # init blank list
     count = 0  # bool count for passes
@@ -92,6 +93,7 @@ def averageall():
     for i in range(1, len(lines)):
         n += timesbetween(i - 1, i)
     print n / len(lines)
+
 
 def average():
     youdate = datetime.timedelta()
@@ -114,10 +116,9 @@ def average():
     print youdate / younum
 
 
-
-
 def main():
-    mode = raw_input("Mode? (stamp, cstamp, read, split, averageall, average, or quit): ")  # ask for mode
+    mode = raw_input(
+        "Mode? (stamp, cstamp, read, split, averageall, average, or quit): ")  # ask for mode
     if mode == "stamp":  # if asked to timestamp now
         timestamp()  # do that
     elif mode == "cstamp":  # if you missed the last time to timestamp
