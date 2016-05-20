@@ -1,63 +1,73 @@
+#!/usr/bin/env python
+"""analytics for fb pokes."""
+
 import datetime  # need for time
 import os.path  # need for file creation
 
 
-time = datetime.datetime.now()  # get current time as object
-name = raw_input("name: ")  # get name of person you are interacting with
+TIME = datetime.datetime.now()  # get current time as object
+NAME = raw_input("name: ")  # get name of person you are interacting with
 
-if not os.path.isfile(name):  # if there is not already a file for this person
+if not os.path.isfile(NAME):  # if there is not already a file for this person
     # check if they typed the wrong name
-    if raw_input("is the name \"" + name + "\" correct? (y/n): ") == "y":
-        print "creating file..."  # if they typed the right name let them know whats up
-        file = open(name, 'w+')  # make a new file
-        file.close()  # close it bc we need to open it appendingly later anyways
+    if raw_input("is the name \"" + NAME + "\" correct? (y/n): ") == "y":
+        print "creating file..."
+        # if they typed the right name let them know whats up
+        FILECREATE = open(NAME, 'w+')  # make a new file
+        FILECREATE.close()
+        # close it bc we need to open it appendingly later anyways
         print "done creating file"  # tell them you completed successfully
     else:  # if they typed the wrong name
         exit()  # exit program
 
-nfile = open(name, "r+")  # open namefile (nfile) by name with read permissions
-nfileedit = open(name, "a+")  # open nfile for editing in append mode
-lines = nfile.readlines()  # make a nice list of all the lines in order
+NFILE = open(NAME, "r+")  # open namefile (nfile) by name with read permissions
+NFILEEDIT = open(NAME, "a+")  # open nfile for editing in append mode
+LINES = NFILE.readlines()  # make a nice list of all the lines in order
 
 
-theyglobal = 0  # we need this in a sec
+THEYGLOBAL = 0  # we need this in a sec
 
-if lines != []:  # if lines isn't blank
-    if lines[0][0] == "t":  # and if it starts with "they start"
-        theyglobal = 1  # let the code down below know they started
-    del lines[0]  # from our temporary list remove that line
+if LINES != []:  # if lines isn't blank
+    if LINES[0][0] == "t":  # and if it starts with "they start"
+        THEYGLOBAL = 1  # let the code down below know they started
+    del LINES[0]  # from our temporary list remove that line
 else:  # if lines is not blank
-    if raw_input("who poked last? t/y: ") == "t":  # ask who poked last, if it was them
-        nfileedit.write("they start\n")  # write to file they started
+    if raw_input("who poked last? t/y: ") == "t":
+        # ask who poked last, if it was them
+        NFILEEDIT.write("they start\n")  # write to file they started
     else:  # if it was you
-        nfileedit.write("you start\n")  # write you start
+        NFILEEDIT.write("you start\n")  # write you start
 
 
 def timestamp():
+    """stamp current time."""
     # write to file current time formatted nicely
-    nfileedit.write(time.strftime("%d/%m/%y %H:%M:%S") + '\n')
+    NFILEEDIT.write(TIME.strftime("%d/%m/%y %H:%M:%S") + '\n')
 
 
 def customtimestamp(inputtime):
+    """write time given."""
     # given inputtime write inputtime to file
-    nfileedit.write(time.strftime(inputtime) + '\n')
+    NFILEEDIT.write(TIME.strftime(inputtime) + '\n')
 
 
 def getline(linenum):
+    """Grab line time as dt obj."""
     # get the line (do not question this code)
-    return datetime.datetime.strptime(lines[linenum].replace('\n', ''), "%d/%m/%y %H:%M:%S")
+    return datetime.datetime.strptime(
+        LINES[linenum].replace('\n', ''), "%d/%m/%y %H:%M:%S")
 
 
 def timesbetween(init, follow):
-    # subtract datetime objects from each other
+    """subtract datetime objects from each other."""
     return getline(follow) - getline(init)
 
 
-def alltimesbetween():  # get all times in between pokes, with person who did thing appended
+def alltimesbetween():
+    """get all times in between pokes, with person who did thing appended."""
     plist = []  # initialize paired list (I know these aren't really plists)
-    count = 0
-    they = theyglobal
-    for i in range(1, len(lines)):
+    they = THEYGLOBAL
+    for i in range(1, len(LINES)):
         plist1 = []
         if they == 0:  # if they did not start, then you did
             # if you started, the first wait was from your press to their
@@ -74,7 +84,8 @@ def alltimesbetween():  # get all times in between pokes, with person who did th
     return plist  # return list of lists
 
 
-def split(plist):  # print every other index in list, then print the rest
+def split(plist):
+    """print every other index in list, then print the rest."""
     plist1 = []  # init blank list
     count = 0  # bool count for passes
     for i in plist:  # for every ime between
@@ -89,19 +100,21 @@ def split(plist):  # print every other index in list, then print the rest
 
 
 def averageall():
-    n = datetime.timedelta()
-    for i in range(1, len(lines)):
-        n += timesbetween(i - 1, i)
-    print n / len(lines)
+    """average of all waits."""
+    sumtime = datetime.timedelta()
+    for i in range(1, len(LINES)):
+        sumtime += timesbetween(i - 1, i)
+    print sumtime / len(LINES)
 
 
 def average():
+    """average times by person."""
     youdate = datetime.timedelta()
     younum = 0
     theydate = datetime.timedelta()
     theynum = 0
-    they = theyglobal
-    for i in range(1, len(lines)):
+    they = THEYGLOBAL
+    for i in range(1, len(LINES)):
         if they == 0:
             theydate += timesbetween(i - 1, i)
             theynum += 1
@@ -117,14 +130,15 @@ def average():
 
 
 def main():
+    """select mode."""
     mode = raw_input(
-        "Mode? (stamp, cstamp, read, split, averageall, average, or quit): ")  # ask for mode
+        "Mode? (stamp, cstamp, read, split, averageall, average, or quit): ")
     if mode == "stamp":  # if asked to timestamp now
         timestamp()  # do that
     elif mode == "cstamp":  # if you missed the last time to timestamp
         # prompt for timestamp and then add it
         customtimestamp(raw_input("time in form " +
-                                  time.strftime("%d/%m/%y %H:%M:%S") + ": "))
+                                  TIME.strftime("%d/%m/%y %H:%M:%S") + ": "))
     elif mode == "read":  # if you want to know the times between
         for i in alltimesbetween():  # get all times between
             print i  # print them
@@ -142,5 +156,5 @@ def main():
 
 main()  # this is what gets executed
 
-nfileedit.close()  # close edit file
-nfile.close()  # close read name file
+NFILEEDIT.close()  # close edit file
+NFILE.close()  # close read name file
