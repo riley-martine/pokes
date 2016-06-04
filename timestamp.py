@@ -135,21 +135,27 @@ def main():
         "Mode? (stamp, cstamp, read, split, averageall, average, or quit): ")
     if mode == "stamp":  # if asked to timestamp now
         timestamp()  # do that
+	main()
     elif mode == "cstamp":  # if you missed the last time to timestamp
         # prompt for timestamp and then add it
         customtimestamp(raw_input("time in form " +
                                   TIME.strftime("%d/%m/%y %H:%M:%S") + ": "))
+	main()
     elif mode == "read":  # if you want to know the times between
         for i in alltimesbetween():  # get all times between
             print i  # print them
+	main()
     elif mode == "split":  # if you want times waited organized by person
-        split(alltimesbetween())  # split all times between
+        split(alltimesbetween())
+	main()  # split all times between
     elif mode == "quit":  # if you type q
         exit()  # exit
     elif mode == "averageall":
         averageall()
+	main()
     elif mode == "average":
         average()
+	main()
     else:  # if you made a typo
         print "That's not a mode"  # let you know
         main()  # retry mode selector (main)
