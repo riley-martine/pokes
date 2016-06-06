@@ -5,7 +5,6 @@ import datetime  # need for time
 import os.path  # need for file creation
 
 
-TIME = datetime.datetime.now()  # get current time as object
 NAME = raw_input("name: ")  # get name of person you are interacting with
 
 if not os.path.isfile(NAME):  # if there is not already a file for this person
@@ -20,10 +19,19 @@ if not os.path.isfile(NAME):  # if there is not already a file for this person
     else:  # if they typed the wrong name
         exit()  # exit program
 
-NFILE = open(NAME, "r+")  # open namefile (nfile) by name with read permissions
-NFILEEDIT = open(NAME, "a+")  # open nfile for editing in append mode
-LINES = NFILE.readlines()  # make a nice list of all the lines in order
 
+def init():
+    """refresh file and time."""
+    global NFILEEDIT
+    global LINES
+    global TIME
+    global NFILE
+
+    NFILE = open(
+        NAME, "r+")  # open namefile (nfile) by name with read permissions
+    NFILEEDIT = open(NAME, "a+")  # open nfile for editing in append mode
+    LINES = NFILE.readlines()  # make a nice list of all the lines in order
+    TIME = datetime.datetime.now()  # get current time as object
 
 THEYGLOBAL = 0  # we need this in a sec
 
@@ -133,29 +141,30 @@ def main():
     """select mode."""
     mode = raw_input(
         "Mode? (stamp, cstamp, read, split, averageall, average, or quit): ")
+    init()
     if mode == "stamp":  # if asked to timestamp now
         timestamp()  # do that
-	main()
+        main()
     elif mode == "cstamp":  # if you missed the last time to timestamp
         # prompt for timestamp and then add it
         customtimestamp(raw_input("time in form " +
                                   TIME.strftime("%d/%m/%y %H:%M:%S") + ": "))
-	main()
+        main()
     elif mode == "read":  # if you want to know the times between
         for i in alltimesbetween():  # get all times between
             print i  # print them
-	main()
+        main()
     elif mode == "split":  # if you want times waited organized by person
         split(alltimesbetween())
-	main()  # split all times between
+        main()  # split all times between
     elif mode == "quit":  # if you type q
         exit()  # exit
     elif mode == "averageall":
         averageall()
-	main()
+        main()
     elif mode == "average":
         average()
-	main()
+        main()
     else:  # if you made a typo
         print "That's not a mode"  # let you know
         main()  # retry mode selector (main)
