@@ -19,6 +19,12 @@ if not os.path.isfile(NAME):  # if there is not already a file for this person
     else:  # if they typed the wrong name
         exit()  # exit program
 
+NFILE = open(
+    NAME, "r+")  # open namefile (nfile) by name with read permissions
+NFILEEDIT = open(NAME, "a+")  # open nfile for editing in append mode
+LINES = NFILE.readlines()  # make a nice list of all the lines in order
+TIME = datetime.datetime.now()  # get current time as object
+
 
 def init():
     """refresh file and time."""
@@ -26,12 +32,23 @@ def init():
     global LINES
     global TIME
     global NFILE
+    global THEYGLOBAL
 
     NFILE = open(
         NAME, "r+")  # open namefile (nfile) by name with read permissions
     NFILEEDIT = open(NAME, "a+")  # open nfile for editing in append mode
     LINES = NFILE.readlines()  # make a nice list of all the lines in order
     TIME = datetime.datetime.now()  # get current time as object
+    if LINES != []:  # if lines isn't blank
+        if LINES[0][0] == "t":  # and if it starts with "they start"
+            THEYGLOBAL = 1  # let the code down below know they started
+        del LINES[0]  # from our temporary list remove that line
+    else:  # if lines is not blank
+        if raw_input("who poked last? t/y: ") == "t":
+            # ask who poked last, if it was them
+            NFILEEDIT.write("they start\n")  # write to file they started
+        else:  # if it was you
+            NFILEEDIT.write("you start\n")  # write you start
 
 THEYGLOBAL = 0  # we need this in a sec
 
