@@ -1,4 +1,5 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/c1213e1ef4bb4842b5682ed5cfa684f3)](https://www.codacy.com/app/maxm215/pokes?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=mbmartine/pokes&amp;utm_campaign=Badge_Grade)
+#Pokes
 So you know when you're poking someone on facebook but don't want to look desperate?
 
 This fun script can keep track of the times in between pokes. 
