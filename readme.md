@@ -31,7 +31,7 @@ This fun script can keep track of the times in between pokes.
 
 Want to test it? here are exact instructions.
 
-$ python timestamp.py
-$ name: testname
-$ mode: read
+    $ python timestamp.py
+    $ name: testname
+    $ mode: read
 
